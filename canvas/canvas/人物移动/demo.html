@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>move</title>
+</head>
+<style>
+    .main{
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 600px;
+        height: 370px;
+        background-image: url('./img/back.jpg');
+        background-size: 600px;
+    }
+    .common{
+        font-size: 12px;
+        width: 45px;
+        height: 26px;
+        line-height: 26px;
+        color: red;
+        position: absolute;
+        top: 10px;
+        left: 500px;
+        z-index: 3;
+        /* border: 1px solid red; */
+        text-align: center;
+        cursor: pointer;
+    }
+    .common.off{
+        left: 540px;
+    }
+</style>
+<body>
+    <div class="main">
+       <canvas id="canvas" width = "600" height="370"></canvas>
+        <div class="common on">开始</div>
+        <div class="common off">暂停</div>
+    </div>
+    <script src="./js/index.js"></script>
+</body>
+</html>

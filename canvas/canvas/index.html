@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas</title>
+</head>
+<body>
+    <canvas id="canvas" width="800px" height="600px"></canvas>
+    <script>
+        //获得画布元素
+        var canvas = document.getElementById('canvas');
+        //获得二维绘图对象
+        var ctx = canvas.getContext("2d");
+        var flag = false;
+        //设置线宽
+        ctx.lineWidth = 2;
+        //颜色
+        ctx.strokeStyle = 'red';
+        // ctx.moveTo(10,10) //绘制起点
+        // ctx.lineTo(100,20 )//下一点
+        // ctx.lineTo(200,50)
+        // ctx.lineTo(300,250)
+        // //ctx.stroke() //绘制执行
+        // ctx.fillStyle = 'blue'
+        // ctx.fill() //填充绘制执行
+        // ctx.stroke()
+
+        // ctx.beginPath() //重新开始绘制
+        // ctx.moveTo(300,400)
+        // ctx.lineTo(500,400)
+        // ctx.lineTo(500,500)
+        // ctx.lineTo(300,500)
+        // ctx.closePath()
+        // ctx.stroke()
+
+        //手绘图
+        // canvas.onmousemove = function(e){ //移动绘图
+        //     if(!flag) return;
+        //     ctx.lineTo(e.clientX,e.clientY)
+        //     ctx.stroke()
+        // }
+        // canvas.onmousedown = function(e){ //移动绘图
+        //     flag = true;
+        //     ctx.beginPath()
+        // }
+        // canvas.onmouseup = function(e){ //移动绘图
+        //    flag = false
+        // }
+
+        // //空心
+        //     ctx.strokeRect(10, 10, 200, 100);
+              
+        // //实心
+        //     ctx.fillStyle = 'green';
+        //     ctx.fillRect(50, 50, 100, 100);
+
+        //渐变
+        var grd = ctx.createLinearGradient(0,0,200,0);
+        grd.addColorStop(0,'red');
+        grd.addColorStop(0.5,'white');
+        grd.addColorStop(1,'blue')
+        ctx.fillStyle = grd;
+        ctx.fillRect(0,0,200,200);
+
+        //清除指定区域
+        ctx.clearRect(150,150,20,20);
+
+        //绘制弧形
+        ctx.fillStyle = '#0ff'
+        ctx.arc(400,200,100,0,Math.PI*2); //(x,y,半径，起始角度)
+        ctx.fill()
+          
+         //文字
+         ctx.font = "50px '微软雅黑'";
+            ctx.shadowColor = 'black';  //阴影颜色
+            ctx.shadowOffsetX = 5;  //阴影
+            ctx.shadowOffsetY = 5;  //阴影
+            ctx.shadowBlur = 10;  //阴影模糊
+            ctx.fillText('hello world',400,50);
+            ctx.strokeText('hello world',400,150);
+          
+              
+              
+          
+
+    </script>
+</body>
+</html>
