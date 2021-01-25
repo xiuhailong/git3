@@ -18,7 +18,10 @@ window.onload = function(){
         },
         toolbox: {   //工具栏
             feature: {
-                saveAsImage: {}     //保存图片
+                saveAsImage: {},     //保存图片
+                // magicType:{  //动态类型切换
+                //     type: ['line', 'bar', 'stack', 'tiled']
+                // },
             }
         },
         xAxis: {   //x轴

@@ -78,13 +78,13 @@ window.onload = function(){
             {
                 name:'最高气温',
                 type:'line',
-               // stack: '总量',
+               stack: '总量',
                 data:[10, 18, 8, 20, 28, 10, 19]
             },
             {
                 name:'最低气温',
                 type:'line',
-                //stack: '总量',
+                stack: '总量',
                 data:[3, 9, -3, 10, 14, 5, 11]
             }
         ]
