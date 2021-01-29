@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react</title>
+    <!-- 也可通过install引入 -->
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script type="text/javascript" src="js/babel.min.js"></script>
+    <style>
+     li{
+       list-style: none;
+       display: inline-block;
+       margin-left: 20px;
+     }
+      .selected {
+        color: #f60;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      window.onload = function () {
+        class List1 extends React.Component{
+          render(){
+            return (
+              <div>
+                <h1>我是内容A</h1>
+                <ul>
+                  <li>1111</li>
+                  <li>1111</li>
+                  <li>1111</li>
+                </ul>
+              </div>              
+            )
+          }
+        }
+        class List2 extends React.Component{
+          render(){
+            return (
+              <div>
+                <h1>我是内容B</h1>
+                <ul>
+                  <li>2222</li>
+                  <li>2222</li>
+                  <li>2222</li>
+                </ul>
+              </div>
+            )
+          }          
+        }
+        class Tab extends React.Component {
+          constructor() {
+            super();
+            this.state = {
+              //通过setState进行修改
+              flag: true,
+            };
+          }
+          change(value) {
+            this.setState({
+              flag: value,
+            });
+          }
+          render() {
+            let flag = this.state.flag
+            return (
+              <div>
+                <ul>
+                  <li className={flag ? "selected" : ""}
+                    onClick={() => this.change(true)}>标题A</li>
+                  <li className={!flag ? "selected" : ""}
+                    onClick={() => this.change(false)}>标题B</li>
+                </ul>
+                <div>{flag ? <List1 /> : <List2 />}</div>
+              </div>
+            );
+          }
+        }
+        ReactDOM.render(
+          <Tab></Tab>,
+          document.getElementById("my")
+        );
+      };
+    </script>
+  </body>
+</html>

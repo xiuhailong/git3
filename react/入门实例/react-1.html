@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script type="text/javascript" src="js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      //第一种方式 通过react渲染元素
+      var str = React.createElement("div", { className: "div-a" }, "123"); //创建虚拟doom
+      ReactDOM.render(str, document.getElementById("my")); //渲染
+
+      var li1 = React.createElement("li", null, "123");
+      var li2 = React.createElement("li", null, "456");
+      var ul = React.createElement("ul", { className: "ul-a" }, li1, li2);
+      ReactDOM.render(ul, document.getElementById("my")); //渲染
+
+      //第二种方式 通过jsx渲染 JSX 模板语言  语法糖  是一种便捷的写法     在JS代码中直接写HTML标记
+      var name = "zhong";
+      var div = ( //只能有一个根目录
+        <div>
+          <h1 id="name">{name == "zhong" ? "aaa" : "wwww"}</h1>
+          <div>1234</div>
+        </div>
+      );
+      ReactDOM.render(div, document.getElementById("my")); //渲染
+
+      //第三  组件   定义一个组件   ES6  CLASS来定义一个组件
+      class Hello extends React.Component {
+        render() {
+          var name = "abc";
+          return (
+            <div>
+              <h1>hello world</h1>
+              <h2>{name}</h2>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(
+        <div>
+          <Hello></Hello>
+        </div>,
+        document.getElementById("my")
+      );
+
+      //ES6 构造函数
+      class Person{
+        constructor(name,age){
+          this.name = name;
+          this.age = age;
+        }
+        active(){
+          return this.name;
+        }
+      }
+      var p = new Person('abc',18);
+      p.active()
+    //   console.log(p.active());
+
+
+      class A{
+        constructor(){
+          this.a = 'a'
+        }
+      }
+      class B extends A{
+        constructor(){   //构造器
+          super(); //关键字  调用父构造器 继承的一种方式
+          this.b = 'b'
+        }
+      }
+      var a = new A()  //a.a
+      var b = new B()  //b.a
+      console.log(b.a);
+    </script>
+  </body>
+</html>
