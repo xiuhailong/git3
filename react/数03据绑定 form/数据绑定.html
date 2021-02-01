@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>双向数据绑定</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      window.onload = function () {
+        class Hello extends React.Component {
+          constructor() {
+            super();
+            this.state = {
+              flag: 0,
+              value: "hello",
+              male: "man",
+              select: 'red'
+            };
+          }
+          handleChange(event) {
+            console.log(event.target);
+            this.setState({
+              value: event.target.value,
+            });
+          }
+          handleRadio(event){
+            this.setState({
+              male:event.target.value
+            })
+          }
+          handleSelect(event){
+            this.setState({
+              select:event.target.value
+            })
+          }
+          handleSubmit(){
+            console.log(this.state)
+          }
+          render() {
+            return (
+              <div>
+                <h1>{this.state.value}</h1>
+                <input type="text" defaultValue="world" />
+                <input
+                  type="text"
+                  value={this.state.value}
+                  onChange={(event) => this.handleChange(event)}
+                />
+
+                <div>
+                  <label>性别</label>
+                  <input type="radio" name='radio2' value='man' checked={this.state.male == "man"?true:''} 
+                  onChange={(event)=>{this.handleRadio(event)}}/>男 
+                  <input type="radio" name='radio2' value='women' checked={this.state.male == "women"?true:''} 
+                  onChange={(event)=>{this.handleRadio(event)}}/>女 
+                </div>
+
+                <select  id="N1" value={this.state.select} onChange={(event)=>this.handleSelect(event)} >
+                  <option value="red">红色</option>
+                  <option value="green">绿色</option>
+                  <option value="blue">蓝色</option> 
+                </select>
+                <button onClick={() => this.handleSubmit()}>提交</button>
+              </div>
+            );
+          }
+        }
+        ReactDOM.render(<div><Hello /></div>, document.getElementById("my"));
+      };
+    </script>
+  </body>
+</html>

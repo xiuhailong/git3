@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>双向数据绑定</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      window.onload = function () {
+        class Hello extends React.Component {
+          constructor() {
+            super();
+            this.state = {
+              name: "",
+              psd: "",
+              phone: "",
+              male: "man",
+              select: "北京",
+            };
+          }
+          handleChange1(event) {
+            var value = event.target.value;
+            var filter = /^[\u4e00-\u9fa5]{2,4}$/;
+            var error = "";
+            if (value == "") {
+              error = "请输入用户名";
+            } else if (!filter.test(value)) {
+              error = "用户名格式错误";
+            } else {
+              error = "";
+            }
+            this.setState({
+              name: value,
+              nameError: error,
+            });
+          }
+          handleChange2(event) {
+            var value = event.target.value;
+            var name = event.target.name;
+            var filter = new RegExp(event.target.getAttribute("filter"));
+            console.log(filter);
+            var error = "";
+            if (value == "") {
+              error = "请输入信息";
+            } else if (!filter.test(value)) {
+              error = "输入格式错误";
+            } else {
+              error = "";
+            }
+            this.setState({
+              [name]: value,
+              [name + "error"]: error,
+            });
+          }
+          handleRadio(event) {
+            this.setState({
+              male: event.target.value,
+            });
+          }
+          handleSelect(event) {
+            this.setState({
+              select: event.target.value,
+            });
+          }
+          handleSubmit() {
+            var data = {
+              name: this.state.name,
+              psd: this.state.psd,
+            };
+            //console.log(data)
+            if(this.state.phone==''){
+                alert("请输入手机号")
+                return
+            } 
+            console.log(data);
+          }
+          render() {
+            var arr = ["北京", "上海", "广东"];
+            return (
+              <div>
+                <div>
+                  <label>姓名</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={this.state.name}
+                    onChange={(event) => this.handleChange1(event)}
+                  />
+                  <span>{this.state.nameError}</span>
+                </div>
+                <div>
+                  <label>密码</label>
+                  <input
+                    type="password"
+                    name="psd"
+                    filter="^[a-zA-Z0-9]\w{5,17}$"
+                    value={this.state.psd}
+                    onChange={(event) => this.handleChange2(event)}
+                  />
+                  <span>{this.state.psderror}</span>
+                </div>
+                <div>
+                  <label>手机号</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    filter="^(13[0-9]|15[0|8]|18[0-9])\d{8}$"
+                    value={this.state.phone}
+                    onChange={(event) => this.handleChange2(event)}
+                  />
+                  <span>{this.state.phoneerror}</span>
+                </div>
+
+                <div>
+                  <label>性别：</label>
+                  <input
+                    type="radio"
+                    name="radio2"
+                    checked={this.state.male == "man" ? true : false}
+                    value="man"
+                    onChange={(event) => this.handleRadio(event)}
+                  />{" "}
+                  男
+                  <input
+                    type="radio"
+                    name="radio2"
+                    checked={this.state.male == "woman" ? true : false}
+                    value="woman"
+                    onChange={(event) => this.handleRadio(event)}
+                  />{" "}
+                  女
+                </div>
+
+                <select
+                  value={this.state.select}
+                  onChange={(event) => this.handleSelect(event)}
+                >
+                  {arr.map(function (item, index) {
+                    return (
+                      <option value={item} key={index}>
+                        {item}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div>
+                  <button
+                    disabled={!this.state.name || this.state.nameError}
+                    onClick={() => this.handleSubmit()}
+                  >
+                    注册
+                  </button>
+                </div>
+              </div>
+            );
+          }
+        }
+        ReactDOM.render(
+          <div>
+            <Hello />
+          </div>,
+          document.getElementById("my")
+        );
+      };
+    </script>
+  </body>
+</html>

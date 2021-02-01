@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>双向数据绑定</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      window.onload = function () {
+        class Hello extends React.Component {
+          constructor() {
+            super();
+            this.state = {
+                name:'abc',
+                psd:'',
+                phone:''
+            };
+          }
+          /**
+           * 公共写法 对文本框的处理
+          */
+          handleChange(event) {
+            var name = event.target.name
+            this.setState({
+              [name]: event.target.value,
+            });
+          }
+         
+          handleSubmit(){
+            console.log(this.state)
+          }
+          render() {
+            return (
+                <div>
+                    <div>
+                    <label>姓名</label>
+                    <input type="text" name="name" value={this.state.name} 
+                            onChange={(event)=>this.handleChange(event)}/>
+                    </div>
+                    <div>
+                    <label>密码</label>
+                    <input type="password" name="psd" value={this.state.psd} 
+                            onChange={(event)=>this.handleChange(event)}/>
+                    </div>
+                    <div>
+                    <label>手机号</label>
+                    <input type="text" name="phone" value={this.state.phone} 
+                            onChange={(event)=>this.handleChange(event)}/>
+                    </div>
+                    <button onClick={()=>this.handleSubmit()}>提交</button>
+                    
+                </div>
+            );
+          }
+        }
+        ReactDOM.render(<div><Hello /></div>, document.getElementById("my"));
+      };
+    </script>
+  </body>
+</html>
