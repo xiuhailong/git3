@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>for</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script type="text/javascript" src="./js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      //外部定义的值  也通过传递
+      var obj = {
+        name:'zhonghzong',
+        age: 20
+      }
+
+      //组件定义  第一种  使用函数定义  需要显示传递props
+      function Hello(props) {
+        var a = 'double' //内部定义值  直接使用
+        return <h1>{a},{props.name}</h1>;  //拿到的是传递中的属性名
+      }
+      //第二种 es6 class定义  通过继承,隐式的传递拿到值
+      class Div extends React.Component {
+        render() {
+          return <h2>world,{this.props.age}</h2>;
+        }
+      }
+
+      ReactDOM.render(
+        <div>
+          <Hello name='aaa' />
+          <Div age='20' />
+        </div>,
+        document.getElementById("my")
+      );
+    </script>
+  </body>
+</html>

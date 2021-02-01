@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>for</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script type="text/javascript" src="./js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      var arr = [1, 2, 3, 4, 5];
+      // 第一种循环写法
+      // ReactDOM.render(
+      //   <div>
+      //     {
+      //       arr.map(function(item,index){
+      //         return <div key={index}>{item}</div>
+      //       })
+      //     }
+      //   </div>,
+      //   document.getElementById("my")
+      // )
+
+      //第二种写法
+      let str = arr.map(function (item, index) {
+        return <div key={index}>{item}</div>;
+      });
+      console.log(str);
+      //for
+      // var arr = [1,2,3,4,5,6,7];
+      // var a = [];
+      // for(var i=0;i<arr.length;i++){
+      //   a.push(<div key={i}>{arr[i]}</div>)
+      // };
+      // ReactDOM.render(
+      //   <div>
+      //     {a}
+      //   </div>,
+      //   document.getElementById("my")
+      // );
+
+      // 数组的写法 添加的虚拟dom结构
+      var div = [
+        <h1 key="1">124345</h1>,
+        <h1 key="2">124345</h1>,
+        <h1 key="3">124345</h1>,
+        <h1 key="4">124345</h1>,
+      ];
+
+      ReactDOM.render(<div>{div}</div>, document.getElementById("my"));
+    </script>
+  </body>
+</html>

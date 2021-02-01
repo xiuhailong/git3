@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tab</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script type="text/javascript" src="./js/babel.min.js"></script>
+    <style>
+      ul li{
+        list-style: none;
+      }
+      li{
+        display: inline-block;
+        margin-left: 20px;
+      }
+      .selected {
+        color: #f60;
+      }
+      .active{
+        color: aqua;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      var obj = {
+        name:'yingying',
+        age:20
+      }
+      class Tab extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            n: 0,
+            list: [
+              { title: "标题a", content: '../../images/banner1.jpg' },
+              { title: "标题b", content: '../../images/banner2.jpg' },
+              { title: "标题c", content: '../../images/banner3.jpg' },
+              { title: "标题d", content: '../../images/banner4.jpg' },
+            ],
+          };
+        }
+        tabChange(index) {
+          this.setState({
+              n:index
+          });
+        }
+        render(){
+            var self = this;
+            var list = self.state.list;
+            let title = list.map(function(item,index){
+                return <li className={index==self.state.n?'selected':''} key={index}
+                        onClick={() => self.tabChange(index)}>{item.title}</li>
+            })
+            let content = list.map(function(item,index){
+                return (           
+                  index ==self.state.n?<img src={item.content} alt="image" key={index} />:''              
+                )
+            });
+            return (
+                <div>
+                    <ul>
+                        {title}
+                    </ul>
+                    <div>
+                        {content}
+                        <List name={this.props.data.name}/>  
+                    </div>
+                </div>
+            )
+        }
+      }
+      class List extends React.Component{
+        render(){
+          return <h1>{this.props.name}</h1>
+        }
+      }
+      ReactDOM.render(<Tab data={obj}></Tab>, document.getElementById("my"));
+    </script>
+  </body>
+</html>

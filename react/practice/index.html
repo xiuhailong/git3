@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>react</title>
+    <script src="./node_modules/react/umd/react.development.js"></script>
+    <script src="./node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./node_modules/babel-standalone/babel.min.js"></script>
+    <style>
+      .tilte1 {
+        color: #f60;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="my"></div>
+
+    <script type="text/babel">
+      window.onload = function () {
+        class List1 extends React.Component {
+          render() {
+            return (
+              <div>
+                <h1>hello world!!!</h1>
+                <p>我好爱这个世界</p>
+              </div>
+            );
+          }
+        }
+        class List2 extends React.Component {
+          render() {
+            return (
+              <div>
+                <h1>i love</h1>
+                <p> today</p>
+              </div>
+            );
+          }
+        }
+        class Tab extends React.Component{
+          constructor(){
+            super();
+            this.state = {
+              flag:true
+            }
+          }
+          change(type){
+            this.setState({
+              flag:type
+            })
+          }
+          render(){
+            return (
+              <div>
+                <h3 onClick={() => {this.change(true)}}>list1</h3>
+                <h3 onClick={() => {this.change(false)}}>list2</h3>
+                <div>
+                 {this.state.flag?<List1 />:<List2 />} 
+                </div>
+              </div>
+            )
+          }
+        }
+        ReactDOM.render(
+          <div><Tab /></div>,
+          document.getElementById("my")
+        )
+        function getPro() {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(3333);
+            }, 2000);
+          });
+        }
+        //  getPro().then(v => {
+        //      console.log(66666);
+        //  }).catch(err => {
+        //      console.log('失败');
+        //  })
+        async function getData() {
+          let res = await getPro();
+          console.log(6666);
+          console.log(res);
+        }
+        getData();
+      };
+    </script>
+  </body>
+</html>

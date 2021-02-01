@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bind</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script type="text/javascript" src="./js/babel.min.js"></script>
+    <style>
+    .selected {
+      color:#f60;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+     //事件绑定
+      //第一，官方推荐 构造器中声明一个绑定
+      // <li className={this.state.flag ?'selected':''} onClick={this.handleClick}}>标题A</li>
+      //第二，简单
+      //<li className={!this.state.flag ?'selected':''} onClick={this.change1.bind(this)}>标题B</li>
+      //第三 箭头函数
+      //<li className={!this.state.flag ?'selected':''} onMouseMove={()=>this.change2()}>标题B</li>
+
+    //state
+    class Tab extends React.Component {
+      constructor(){
+        super();
+        this.state ={
+          flag:true
+        };
+        this.handleClick = this.change1.bind(this);  //第一种方法需要在构造器中声明绑定 bind绑定作用域
+      }
+      change1() {
+        this.setState({
+          flag:true
+        })
+      }
+      //优化第一种 通过箭头函数
+      change2() {
+        this.setState({
+          flag:false
+        })
+      }
+      render(){
+        return (
+          <div>
+           <ul>
+              <li className={this.state.flag ?'selected':''} onClick={this.handleClick}>标题A</li>
+              <li className={!this.state.flag ?'selected':''} onClick={()=>this.change2()}>标题B</li> 
+           </ul>
+           <div>
+              {this.state.flag ? <p>内容A</p> : <p>内容B</p>}
+           </div>
+          </div>
+        )
+      }
+    };
+    ReactDOM.render(
+      <Tab></Tab>,
+      document.getElementById("my")
+    );
+    </script>
+  </body>
+</html>

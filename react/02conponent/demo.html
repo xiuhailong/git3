@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>for</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script type="text/javascript" src="./js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      //外部定义的值  也通过传递
+      var obj = {
+        title: '标题',
+        content:'内容内容',
+        author:{
+          name:'zhongzhong',
+          url: '../../images/banner1.jpg'
+        }
+      }
+
+      //展示标题
+      function Title(props) {
+        return <h1>{props.name}</h1>;  //拿到的是传递中的属性名
+      }
+      //展示内容
+      class Div extends React.Component {
+        render() {
+          return <h3>{this.props.text}</h3>;
+        }
+      }
+      //展示图片
+      class Img extends React.Component{
+        render(){
+          return <img src={this.props.info.url} />
+        }
+      }
+      function App(props){
+        return (
+          <div>
+            <Title name={props.data.title}  />
+            <Div text={props.data.content} />
+            <Img info={props.data.author} />
+          </div>
+        )
+      }
+      ReactDOM.render(
+        <div>
+          <App data={obj} />
+        </div>,
+        document.getElementById("my")
+      );
+    </script>
+  </body>
+</html>
