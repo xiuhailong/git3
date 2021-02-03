@@ -11,53 +11,106 @@
       .tilte1 {
         color: #f60;
       }
+      .title{
+        display: inline-flex;
+      }
+      .title p{
+        margin: 0 10px;
+      }
+      .active{
+        color: #f60;
+      }
+      label{
+        display: block;
+      }
     </style>
   </head>
   <body>
     <div id="my"></div>
-
+    <button id="btn">zhongzhong</button>
     <script type="text/babel">
+    // var site = 'zhong'
+    //  function fun(){
+    //    console.log(this.site);
+    //  }
+    //  fun()
       window.onload = function () {
-        class List1 extends React.Component {
-          render() {
-            return (
-              <div>
-                <h1>hello world!!!</h1>
-                <p>我好爱这个世界</p>
-              </div>
-            );
-          }
-        }
-        class List2 extends React.Component {
-          render() {
-            return (
-              <div>
-                <h1>i love</h1>
-                <p> today</p>
-              </div>
-            );
-          }
-        }
+        // class List1 extends React.Component {
+        //   render() {
+        //     return (
+        //       <div>
+        //         <h1>hello world!!!</h1>
+        //         <p>我好爱这个世界</p>
+        //       </div>
+        //     );
+        //   }
+        // }
+        // class List2 extends React.Component {
+        //   render() {
+        //     return (
+        //       <div>
+        //         <h1>i love</h1>
+        //         <p> today</p>
+        //       </div>
+        //     );
+        //   }
+        // }
         class Tab extends React.Component{
           constructor(){
             super();
             this.state = {
-              flag:true
+              flag:0,
+              value:12345,
+              sex:"man",
+              list:[{title:'aaa',content:'hello'},{title:'bbb',content:'world'},{title:'ccc',content:'tuesday'}]
             }
           }
-          change(type){
+          change(index){
             this.setState({
-              flag:type
+              flag:index
             })
           }
+          handleChange(event){
+            this.setState({
+              value:event.target.value
+            })
+          }
+          changeSex(event){
+            this.setState({
+              sex:event.target.value
+            })
+          }
+          submit(){
+            let data = {
+              value:this.state.value,
+              sex:this.state.sex
+            }
+            console.log(data);
+          }
           render(){
+            let flag = this.state.flag
+            let title = this.state.list.map((item,index)=>{
+              return <p className={flag==index?'active':''} key={index} onClick={()=>{this.change(index)}}>{item.title}</p>
+            })
+            let content = this.state.list.map((item,index)=>{
+              return (flag==index?<p key={index}>{item.content}</p>:'')
+            })
             return (
               <div>
-                <h3 onClick={() => {this.change(true)}}>list1</h3>
-                <h3 onClick={() => {this.change(false)}}>list2</h3>
+                <div className="title">{title}</div>
+                <div>{content}</div>
                 <div>
-                 {this.state.flag?<List1 />:<List2 />} 
+                  <h3>{this.state.value}</h3>
+                  <input type="text" value={this.state.value} onChange={(event)=>this.handleChange(event)}/>  
                 </div>
+                <div>
+                  <label >性别</label>  
+                  <input type="radio" name="sex" value="man" checked={this.state.sex=="man"?true:false}
+                  onChange={(event)=>{this.changeSex(event)}}/> 男
+                  <input type="radio" name="sex" value="women" checked={this.state.sex=="women"?true:false}
+                  onChange={(event)=>{this.changeSex(event)}}/> 女
+                </div>
+                <div><button onClick={()=>{this.submit()}}>提交</button></div>
               </div>
             )
           }
@@ -66,25 +119,82 @@
           <div><Tab /></div>,
           document.getElementById("my")
         )
-        function getPro() {
-          return new Promise((resolve, reject) => {
-            setTimeout(() => {
-              resolve(3333);
-            }, 2000);
-          });
-        }
+        // function getPro() {
+        //   return new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //       resolve(3333);
+        //     }, 2000);
+        //   });
+        // }
         //  getPro().then(v => {
         //      console.log(66666);
         //  }).catch(err => {
         //      console.log('失败');
         //  })
-        async function getData() {
-          let res = await getPro();
-          console.log(6666);
-          console.log(res);
-        }
-        getData();
+        // async function getData() {
+        //   let res = await getPro();
+        //   console.log(6666);
+        //   console.log(res);
+        // }
+        // getData();
+        // function sum(num){
+        //   console.log(this);
+        //   return num==1?1:num*sum(--num)
+        // }
+        
+        // console.log(sum(5));
       };
+    </script>
+    <script type="text/javascript">
+    // let obj = {
+    //   name:'zhong',
+    //   age:18
+    // }
+    //   function fun(a,b){
+    //     console.log(a+b);
+    //   }
+    //   fun.call(obj,2,3)
+    // function User(name){
+    //   this.name = name;
+    //   this.show = function(){
+    //     let fn = () =>{
+    //       console.log(this);
+    //     }
+    //     fn.call()
+    //   }
+    // }
+    // let lisi = new User('李四')
+    // lisi.show()
+    // let obj = {
+    //   f:3
+    // }
+    // function sum(a,b){
+    //   console.log(this);
+    //   console.log(this.f+a+b);
+    // }
+    // let fun = sum.bind(obj)
+    // fun(2,3)
+    // let div = document.querySelector('button')
+    // div.addEventListener('click',function(){
+    //   console.log(this.innerHTML);
+    // })
+    // let obj1 = {
+    //   name:123,
+    //   age:456
+    // }
+    // let arr = [4,6,3]
+    //console.log(Math.max.apply(Math,arr));
+    
+    //let sum = arr.reduce((a,b)=>{a+b})
+    // let sum = arr.reduce((a,b)=>{
+    //   return a+b
+    // })
+    // console.log(sum);
+      // arr.map((value,index)=>{
+      //   console.log(`${value}--${index}`);
+      //   console.log(this);
+      // })
+    
     </script>
   </body>
 </html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>生命周期</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      window.onload = function () {
+        class Selectbox extends React.Component{
+            constructor(){
+                super();
+                this.state = {
+                    checkAll:false,
+                    lists:[{name:'华为1',check:true},
+                            {name:'华为2',check:false},
+                            {name:'华为3',check:false},
+                            {name:'华为4',check:false},
+                            {name:'华为5',check:true},
+                            {name:'华为6',check:false},
+                            {name:'华为7',check:false},
+                            {name:'华为8',check:false},
+                            {name:'华为9',check:false}]
+                }
+            }
+            handleAllChange(){
+                let {checkAll,lists} = this.state;
+                lists.map((item,index)=>{
+                    return item.check = !checkAll
+                })
+                this.setState({
+                    checkAll:!checkAll,
+                    lists:lists
+                })
+            }
+            handleCurChange(cur){
+                let {checkAll,lists} = this.state;
+                // console.log(cur);
+                lists.map((item,index)=>{
+                    if(item.name == cur.name){
+                        return    item.check = !cur.check
+                    }
+                    // return item
+                })
+                let checkAllState = lists.every(function(item,index){
+                    return item.check
+                })
+                console.log(lists);
+                this.setState({
+                    checkAll:checkAllState,
+                    lists:lists
+                })
+
+            }
+            render(){
+                let {checkAll,lists} = this.state;
+                let itemList = lists.map((item,index)=>{
+                    return (
+                        <li key={index}>
+                            <input type="checkbox" checked={item.check} onChange={()=>this.handleCurChange(item)} />
+                            <label>{item.name}</label>
+                        </li>
+                    )
+                })
+                return (
+                    <div>
+                        <input type="checkbox" checked={checkAll} onChange={()=>this.handleAllChange()}/>
+                        <label>全选</label>
+                        <ul>
+                            {itemList}
+                        </ul>  
+                    </div>
+                ) 
+            }
+        }
+
+        ReactDOM.render(<div><Selectbox /></div>, document.getElementById("my"));
+      };
+    </script>
+  </body>
+</html>

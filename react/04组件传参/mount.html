@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>生命周期</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      window.onload = function () {
+        class Hello extends React.Component {
+          constructor() {
+            super();
+            this.state = {
+                data:0
+            };
+          }
+          setNum(){
+            this.setState({data:++this.state.data})
+          }
+          render(){
+            return (
+              <div>
+                <button onClick={()=>{this.setNum()}}>ADD</button>
+                <p>{this.state.data}</p>
+                <Num myNum = {this.state.data}></Num>
+              </div>
+            )
+          }
+        }
+        class Num extends React.Component{
+          componentWillMount(){
+            console.log('组件将要挂载');
+          };
+          componentDidMount () {
+            console.log('组件完成挂载');
+          };
+          componentWillUpdate()  {  //初始化并没有调用
+            console.log('组件将要更新 render前');
+          };
+          componentDidUpdate()  {  //初始化并没有调用
+            console.log('组件将要更新 render后');
+          };
+          componentWillUnmount(){
+            console.log('在组件从 DOM 中移除的时候立刻被调用');
+          }
+          render () {
+              console.log('render')
+            return (
+              <div>
+                <p>{this.props.myNum}</p>
+              </div>
+            );
+          }
+        };
+        ReactDOM.render(<div><Hello /></div>, document.getElementById("my"));
+      };
+    </script>
+  </body>
+</html>

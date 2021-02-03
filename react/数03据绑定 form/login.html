@@ -24,6 +24,7 @@
               phone: "",
               male: "man",
               select: "北京",
+              interest:[]
             };
           }
           handleChange1(event) {
@@ -70,10 +71,24 @@
               select: event.target.value,
             });
           }
+          changeCheckBox(event){
+            let arr = this.state.interest
+            let checked = event.target.checked;
+            if(checked){
+              arr.push(event.target.value)
+            }else{
+              arr = arr.filter(function(item){
+                return item != event.target.value
+              })
+            }
+            console.log(arr);
+            this.setState({interest:arr})
+          }
           handleSubmit() {
             var data = {
               name: this.state.name,
               psd: this.state.psd,
+              interest:this.state.interest
             };
             //console.log(data)
             if(this.state.phone==''){
@@ -83,7 +98,21 @@
             console.log(data);
           }
           render() {
+            //var {name,psd,phone,male,select,interest} = this.state; //对象解构
             var arr = ["北京", "上海", "广东"];
+            var interestArr = [{name:'逛街',value:'0'},
+                              {name:'上网',value:'1'},
+                              {name:'唱歌',value:'2'},
+                              {name:'旅游',value:'3'},
+                              {name:'运动',value:'4'}];
+            let str = interestArr.map((item,index)=>{
+              return (
+                <label key={index}>
+                  <input type="checkbox" name="interest" value={item.value} 
+                  onClick={event => this.changeCheckBox(event)}/>{item.name}
+                </label>               
+              )
+            })
             return (
               <div>
                 <div>
@@ -151,6 +180,10 @@
                     );
                   })}
                 </select>
+                <div>
+                  <div>兴趣爱好：</div>
+                  {str}
+                </div>
                 <div>
                   <button
                     disabled={!this.state.name || this.state.nameError}
