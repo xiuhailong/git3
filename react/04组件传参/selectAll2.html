@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全选2</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+      window.onload = function () {
+        class Selectbox extends React.Component{
+            constructor(){
+                super();
+                this.state = {
+                    checkAll:false,
+                    lists:[{name:'华为1',check:true},
+                            {name:'华为2',check:false},
+                            {name:'华为3',check:false},
+                            {name:'华为4',check:false},
+                            {name:'华为5',check:true},
+                            {name:'华为6',check:false},
+                            {name:'华为7',check:false},
+                            {name:'华为8',check:false},
+                            {name:'华为9',check:false}]
+                }
+            }
+            handAllChange(){
+              let {checkAll,lists} = this.state;
+              lists.map(item=>{
+                item.check = !checkAll
+              })
+              console.log(lists);
+              this.setState({
+                checkAll:!checkAll,
+                lsits:lists
+              })
+            }
+            handlerChange(cur){
+              console.log(cur);
+              console.log(this);
+              let {checkAll,lists} = this.state;  //es6对象解构
+              lists.map(function(item,index){
+                if(item.name==cur.name){
+                  return item.check = cur.check
+                }
+              });
+              let checkState = lists.every(function(item,index){
+                return item.check;
+              });
+              this.setState({
+                checkAll:checkState,
+                lists:lists
+              })
+            }
+            render(){
+              let {checkAll,lists} = this.state;
+              let list = lists.map((item,index)=>{
+                return (
+                  <Itembox key={index} {...item} checkAll={checkAll} 
+                  handleChange={this.handlerChange.bind(this)}></Itembox>
+                )
+              })
+              return (
+                <div>
+                  <input type="checkbox" checked={checkAll} onChange={()=>this.handAllChange()} />
+                  <label>全选</label>
+                  <ul>
+                    {list}
+                  </ul>  
+                </div>
+              )
+            }
+
+            
+        }
+        class Itembox extends React.Component{
+          constructor(props){
+            super(props);
+            this.state = {
+              name:props.name,
+              check:props.check
+            }
+          }
+          componentWillReceiveProps(nextProps,prevProps){ //组件接收到props
+            if(nextProps!=prevProps){
+              this.setState({
+                check:nextProps.check
+              })
+            }
+          }
+          handleCurChange(){
+            let {name,check} = this.state;
+            this.setState({
+              check:!check
+            },function(){
+              this.props.handleChange({name:name,check:!check}); //传值到父组件并促发父组件中的事件
+            })
+          }
+          render(){
+            let {name,check} = this.state;
+            return (
+              <li>
+                  <input type="checkbox" checked={check} onChange={()=>this.handleCurChange()} />
+                  <label>{name}</label>
+              </li>
+            )
+          }
+        }
+
+        ReactDOM.render(<div><Selectbox /></div>, document.getElementById("my"));
+      };
+    </script>
+  </body>
+</html>

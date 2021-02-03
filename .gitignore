@@ -1,3 +1,5 @@
 *.ls
 /react/入门实例/node_modules
 /react/practice/node_modules
+/react/04组件传参/node_modules
+/react/react-demo/react-mydemo/node_modules

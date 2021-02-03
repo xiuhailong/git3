@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>组件传参</title>
+    <!-- 也可通过install引入 react react-dom babel-standalone -->
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 定义容器 存放虚拟doom -->
+    <div id="my"></div>
+
+    <script type="text/babel">
+    //组件的5种关系 父——子——子  子——父  兄弟 非关系型组件
+      window.onload = function () {
+        class ParentList extends React.Component {
+            constructor(){
+                super();
+                this.state = {
+                    name:'father',
+                    age:50
+                }
+            }
+            handleFather(value){
+              console.log(value);
+              this.setState({
+                name:value
+              })
+            }
+          render(){
+              return (
+                <div>
+                    <h1>{this.state.name}</h1>
+                    <ChildLsit {...this.state} handleFather={this.handleFather.bind(this)}/>  
+                </div>                
+              )
+          }
+        }
+       class ChildLsit extends React.Component{
+           constructor(props){
+            super(props);
+            this.state = {
+                name:props.name,
+                age:props.age,
+                childName:'child'
+            }
+           }
+           handleChange(event){
+             let data = event.target.value
+            this.setState({
+                name:event.target.value
+            },function(){
+              this.props.handleFather(data)
+            })
+           }
+           render(){
+               let {name,age,childName} = this.state
+               return (
+                <div>
+                    <h2>子标签 {this.props.age}</h2>
+                    <input type="text" value={name} onChange={(event)=>{this.handleChange(event)}} />
+                </div> 
+               )
+           }
+       }
+        ReactDOM.render(<div><ParentList /></div>, document.getElementById("my"));
+      };
+    </script>
+  </body>
+</html>
