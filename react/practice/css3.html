@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css3</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+
+        }
+        main{
+            flex-grow: 1;
+            background: #f3f3f3;
+        }
+        footer{
+            height: 50px;
+            background: #ddd;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #ccc;
+        }
+        footer section{
+            flex: 1;
+            border-right: 1px solid #ccc;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        footer section:last-child{
+            border-right: none;
+        }
+        footer section h4{
+            flex: 0 0 50px;
+            display: flex;
+            text-align: center;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+        }
+        footer section ul{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: solid 1px #555;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        footer section ul li {
+        flex: 1 0 50px;
+        border-bottom: solid 1px #555;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    footer section ul li:last-child {
+        border: none;
+    }
+    article{
+        width: 300px;
+        height: 300px;
+        display: grid;
+        border: solid 2px silver;
+        grid-template-rows: repeat(3,1fr);
+        grid-template-columns: repeat(3,1fr) ;
+    }
+    div{
+        width: 100px;
+        height: 100px;
+        background-color: blueviolet;
+        background-clip: content-box;
+        border: solid 1px blueviolet;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    </style>
+</head>
+<body>
+    <!-- <main></main>
+    <footer>
+        <section>
+            <h4>教程</h4>
+            <ul>
+                <li>PHP</li>
+                <li>CSS</li>
+            </ul>
+        </section>
+        <section>
+            <h4>直播</h4>
+        </section>
+        <section>
+            <h4>软件</h4>
+        </section>
+    </footer> -->
+    <article>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+    </article>
+</body>
+</html>

@@ -6,66 +6,242 @@
     <title>object</title>
 </head>
 <body>
-
+    <div>
+        <input type="text" v-model="title" />
+    </div>
+    <div>
+        <input type="text" v-model="title" />
+    </div>
+    <h3 v-bind="title">这里也会发生更新</h3>
+    <div>
+        <input type="text" v-model="content" />
+    </div>
+    <h3 v-bind="content">hello world</h3>
     <script type="text/javascript">
-        let obj = {
-            name: 'laozhang',
-            age: 18,
-            identify:{
-                sex: 'male'
-            },
-            interest:['shopping']
-        }
-        console.log(Object.entries(obj));
-        for (const [k,v] of Object.entries(obj)) {
-            console.log(k,v);
-        }
-        let arr = [1,2,3,4,5]
-        // for (const ele of arr) {
-        //     console.log(ele);
-        // }
-        let result  = Object.entries(arr)
-        //console.log(result);
-        let res = Object.entries(obj)
-        // for (const [k,v] of res) {
-        //     console.log(k);
-        //     console.log(v);
-        // }  
-        //console.log(res);  
-       let obj1 = Object.assign({},obj)   
-       obj1.name = "zhongzhong"
-    //    console.log(obj1);
-    //    console.log(obj);
-    //    console.log(
-    //        JSON.stringify(obj,null,2)
-    //    );
-    function copy(obj){
-        let res = obj instanceof Array?[]:{}
-        for (const [k,v] of Object.entries(obj)) { 
-            res[k] = typeof v =="object"?copy(v):v
-        }
-        return res
-    }
-    let hd = copy(obj)
-    // hd.name = "zhong"
-    console.log(hd);
-    let user = {
-        name:'wang',
-        age:18
-    }
+    //     let obj = {
+    //         name: 'laozhang',
+    //         age: 18,
+    //         identify:{
+    //             sex: 'male'
+    //         },
+    //         interest:['shopping']
+    //     }
+    //     console.log(Object.entries(obj));
+    //     for (const [k,v] of Object.entries(obj)) {
+    //         console.log(k,v);
+    //     }
+    //     let arr = [1,2,3,4,5]
+    //     // for (const ele of arr) {
+    //     //     console.log(ele);
+    //     // }
+    //     let result  = Object.entries(arr)
+    //     //console.log(result);
+    //     let res = Object.entries(obj)
+    //     // for (const [k,v] of res) {
+    //     //     console.log(k);
+    //     //     console.log(v);
+    //     // }  
+    //     //console.log(res);  
+    //    let obj1 = Object.assign({},obj)   
+    //    obj1.name = "zhongzhong"
+    // //    console.log(obj1);
+    // //    console.log(obj);
+    // //    console.log(
+    // //        JSON.stringify(obj,null,2)
+    // //    );
+    // function copy(obj){
+    //     let res = obj instanceof Array?[]:{}
+    //     for (const [k,v] of Object.entries(obj)) { 
+    //         res[k] = typeof v =="object"?copy(v):v
+    //     }
+    //     return res
+    // }
+    // let hd = copy(obj)
+    // // hd.name = "zhong"
+    // console.log(hd);
+    // let user = {
+    //     name:'wang',
+    //     age:18
+    // }
     
     
-    Object.defineProperty(user,"name",{
-        value:"ying",
-        writable:false, //是否可更改
-        enumerable:true, //是否可遍历
-        configurable:true //是否可配置 
-    })
+    // Object.defineProperty(user,"name",{
+    //     value:"ying",
+    //     writable:false, //是否可更改
+    //     enumerable:true, //是否可遍历
+    //     configurable:true //是否可配置 
+    // })
     
-    //console.log(Object.getOwnPropertyDescriptors(user));
-    user.name = "xiu"
-    //console.log(user);
+    // //console.log(Object.getOwnPropertyDescriptors(user));
+    // user.name = "xiu"
+    // //console.log(user);
 
+    //访问器 
+    // let obj = {
+    //     data :{age:30},
+    //     name:'xiu',
+    //     set age(value){
+    //         console.log(value);
+    //         if(value<10||value>100){
+    //             throw new Error("输入值不对")
+    //         }
+    //         this.data.age = value
+    //     },
+    //     get age(){
+    //         return this.data.age+'岁'
+    //     },
+    //     set name(value){ // 优先级高于原始的 name属性消失
+    //         console.log(value+"-hai");
+    //     }
+    // }
+    // obj.age = 86
+    // obj.name = 'zhong'
+    //console.log(obj.age);
+    //伪造属性
+    let lesson = {
+        lists: [
+            {name:'js',price:100},
+            {name:'css',price:130},
+            {name:'vue',price:365},
+        ],
+        get total(){
+            //console.log(666);
+            return this.lists.reduce((t,item)=>t+item.price,0)
+        }
+    }
+    lesson.total = 2000;
+    //console.log(lesson.total);
+
+    //批量设置属性
+    let web = {
+        name: 'houdun',
+        url: 'houdun.com',
+        get site(){
+            return `${this.name}的网址是${this.url}`
+        },
+        set site(value){
+            [this.name,this.url] = value.split(',')
+        }
+    }
+    web.site = "zhong,www.hdcms.com"
+    //console.log(web.name);
+
+    //构造函数使用特征定义访问器
+    function User(name,age){
+        let data = {name,age} //私有化
+        Object.defineProperties(this,{
+            name:{
+                get(){
+                    return data.name
+                },
+                set(value){
+                    if(value.trim()==""){
+                        throw new Error("用户名不合法")
+                    }
+                    data.name = value
+                }
+            },
+            age:{
+                get(){
+                    return data.age
+                },
+                set(value){
+                    if(value.trim()==""){
+                        throw new Error("用户名不合法")
+                    }
+                    data.age = value
+                }
+            }
+        })
+    }
+    let zhong = new User('zhongzhong',22)
+    zhong.name = 'ying'
+    //console.log(zhong.age);
+
+    //对象代理
+
+    
+    </script>
+    <script type="text/javascript">
+        //对象代理 严格模式下set后要返回true
+        const hd = {name: "houdunren",age:20}  
+        const proxy = new Proxy(hd,{
+            get(obj, property){
+                console.log(property);
+                return obj[property]
+            },
+            set(obj,property,value){
+                obj[property] = value
+            }
+        }) 
+        proxy.age = 50
+        //console.log(proxy.age); 
+        //对函数控制
+        let sum;
+        function factorial(num){
+            return num == 1? 1 : num*factorial(num-1)
+        }
+        let proxy1 = new Proxy(factorial,{
+            apply(func,obj,args){
+                //console.time('run');
+              sum = func.apply(this,args);
+                
+                //console.timeEnd("run");
+            }
+        })
+       proxy1(6);
+       //console.log(sum);
+        
+        
+        //对数组控制
+        let lessons = [
+            {
+                title:"你大爷还是你大爷",
+                category : "css"
+            },
+            {
+                title:"你二大爷还是你二大爷",
+                category : "js"
+            },
+            {
+                title:"你三大爷还是你三大爷",
+                category : "html"
+            },
+        ]
+        let proxy2 = new Proxy(lessons,{
+            get(array,key){
+              let title =  array[key].title;
+              let len = 8;
+              array[key].title = title.length>len?title.substr(0,len)+".".repeat(3):title;
+              return array
+            }
+        })
+        let obj3 = proxy2[2]
+        console.log(obj3);
+        function View(){
+            let proxy3 = new Proxy({},{
+                get(obj,property){},
+                set(obj,property,value){
+                    //console.log(property);
+                    document.querySelectorAll(`[v-model="${property}"]`).forEach(item=>{
+                        item.value = value
+                    })
+                    document.querySelectorAll(`[v-bind="${property}"]`).forEach(item=>{
+                        item.innerHTML = value
+                    })
+                },
+            });
+            this.init = function(){
+                let els = document.querySelectorAll("[v-model]")
+                els.forEach(item=>{
+                    item.addEventListener("keyup",function(){
+                        proxy3[this.getAttribute('v-model')] = this.value
+                    })
+                })
+            }
+        }
+        let view = new View();
+        view.init()
     </script>
 </body>
 </html>

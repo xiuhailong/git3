@@ -1,12 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import { Button } from 'antd';
 
-function App() {
+function App() { //function定义的组件
   return (
     <div className="App">
       <header className="App-header">
+        <div className="div1">我是div1</div>
+        <Button type="primary">Primary Button</Button>
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
+        <p style={{color:'#f40'}}>
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
