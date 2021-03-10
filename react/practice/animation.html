@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animation</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        main{
+            width: 100px;
+            height: 100px;
+            background: blueviolet;
+            animation-name: anim;
+            animation-duration: 2s;
+        }
+        @keyframes anim {
+            0% {
+                background: #000;
+            }
+            25% {
+                transform: scale(2);
+            }
+            50% {
+                transform: scale(1);
+                border-radius: 50%;
+            }
+            100% {
+                background: #f00;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div></div>
+    </main>
+</body>
+</html>

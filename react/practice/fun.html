@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>闭包</title>
+    <style>
+      button {
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <button>houdunren</button>
+    <script type="text/javascript">
+      // function show(){
+      //     let n = 1;
+      //     return function sum(){
+      //         console.log(++n);
+      //     }
+      //     // sum();
+      // }
+      // let fun = show()
+      // fun()
+      // fun()
+
+      //构造函数
+      // function Hd(){
+      //     let n = 1;
+      //     this.sum = function(){
+      //         console.log(++n);
+      //     }
+      // }
+      // let a = new Hd()
+      // a.sum()
+      // a.sum()
+
+      //块级作用域
+      {
+        let a = 1;
+        console.log(a);
+      }
+
+      // for(var i = 1; i<=3; i++){
+      //     console.log(i);
+      // }
+
+      for (let i = 1; i <= 3; i++) {
+        //console.log(i);
+      }
+      // let 外部访问不到 console.log(i);
+
+      for (var i = 1; i <= 3; i++) {
+        (function (a) {
+          setTimeout(function () {
+            //console.log(a);
+          }, 1000);
+        })(i);
+      }
+      //闭包特性
+      //获取区间数据
+      let arr = [4, 5, 6, 8, 45, 65, 2, 3, 9, 12];
+      function between(a, b) {
+        return function (v) {
+          return v >= a && v <= b;
+        };
+      }
+      console.log(arr.filter(between(3, 9)));
+
+      //动画
+      let btns = document.querySelectorAll("button");
+      btns.forEach((item) => {
+        let left = 1;
+        let interval = false;
+        item.addEventListener("click", function () {
+          if (!interval) {
+              interval = true
+            setInterval(() => {
+              item.style.left = left++ + "px";
+            }, 100);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise</title>
+</head>
+<body>
+    
+    <script type="text/javascript">
+        var getJson = function(url){
+            var promise = new Promise((resolve,reject)=>{
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET",url);
+                xhr.onreadystatechange = function(){
+                    if(this.readyState !== 4) return;
+                    if(this.status == 200){
+                        resolve(this.response)
+                    }else{
+                        reject(new Error(this.statusText))
+                    }
+                }
+                xhr.responseType = "json";
+                shr.setRequestHeader("accept","application/json")
+                xhr.send()
+            })
+            return promise;
+        }
+    </script>
+</body>
+</html>
